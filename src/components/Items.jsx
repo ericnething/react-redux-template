@@ -40,27 +40,31 @@ const ItemForm = ({
 
 const validateForm = form => form.trim().length > 0 ? true : false
 
-class Items extends React.Component {
-  render() {
-    const submit = () => {
-      if (validateForm(this.props.itemForm)) {
-        this.props.addItem({ text: this.props.itemForm })
-        this.props.resetItemForm()
-      } else {
-        return null
-      }
+const Items = ({
+  items,
+  itemForm,
+  addItem,
+  updateItemForm,
+  resetItemForm,
+}) => {
+  const submit = () => {
+    if (validateForm(itemForm)) {
+      addItem({ text: itemForm })
+      resetItemForm()
+    } else {
+      return null
     }
-    return (
-      <div>
-        <ItemForm
-          update={e => this.props.updateItemForm(e.target.value)}
-          submit={submit}
-          value={this.props.itemForm}
-        />
-        {this.props.items.map(Item)}
-      </div>
-    )
   }
+  return (
+    <div>
+      <ItemForm
+        update={e => updateItemForm(e.target.value)}
+        submit={submit}
+        value={itemForm}
+      />
+      {items.map(Item)}
+    </div>
+  )
 }
 
 const mapStateToProps = state => ({
